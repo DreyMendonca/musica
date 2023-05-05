@@ -69,52 +69,14 @@ export default function Music() {
         playSound();
     }
 
-    const scrollX = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => {
-        scrollX.addListener(({ value }) => {
-            // console.log(`ScrollX : ${value} | Devide Width: ${width}`);
-            const index = Math.round(value / width);
-            setSongIndex(index);
-            // console.log(index);
-        });
-    }, [])
-
-    const renderSongs = ({ item, index }) => {
-        return (
-            <Animated.View style={styles.mainImageWrapper}>
-                <View style={[styles.imageWrapper, styles.elevation]}>
-                    <Image source={item.artwork} style={styles.musicImage} />
-                </View>
-            </Animated.View>
-
-        )
-    }
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.maincontainer}>
-                {/* image */}
 
-                <Animated.FlatList
-                    renderItem={renderSongs}
-                    data={songs}
-                    keyExtractor={item => item.id}
-                    horizontal
-                    pagingEnabled
-                    showsHorizontalScrollIndicator={false}
-                    scrollEventThrottle={16}
-                    onScroll={Animated.event(
-                        [
-                            {
-                                nativeEvent: {
-                                    contentOffset: { x: scrollX },
-                                }
-                            }
-                        ],
-                        { useNativeDriver: true },
-                    )}
-                />
+                {/* image */}
+                <Image style={styles.artwork} source={songs[songIndex].artwork } />
 
                 {/* Song Content */}
                 <View>
@@ -232,6 +194,14 @@ const styles = StyleSheet.create({
 
     },
 
+    artwork: {
+        width: 300,
+        height: 300,
+        borderRadius: 150,
+        marginBottom: 25,
+        marginTop: 35
+      },  
+    
     songTitle: {
         fontSize: 18,
         fontWeight: '600',
